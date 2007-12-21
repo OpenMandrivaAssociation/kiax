@@ -15,6 +15,7 @@ BuildRequires:	kdelibs-devel
 BuildRequires:	xpm-devel
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Kiax is an IAX client application (a so called Softphone) which
