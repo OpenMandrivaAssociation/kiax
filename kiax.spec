@@ -50,7 +50,6 @@ install -d %{buildroot}%{_bindir}
 install -d %{buildroot}%{_iconsdir}
 install -d %{buildroot}%{_miconsdir}
 install -d %{buildroot}%{_liconsdir}
-install -d %{buildroot}%{_menudir}
 install -d %{buildroot}%{_datadir}/%{name}/icons
 install -d %{buildroot}%{_datadir}/%{name}/i18n
 
@@ -64,16 +63,6 @@ convert %{SOURCE1} -geometry 32x32 %{buildroot}%{_iconsdir}/%{name}.png
 convert %{SOURCE1} -geometry 16x16 %{buildroot}%{_miconsdir}/%{name}.png
 
 # fix mandrake menu entry
-cat >> %{buildroot}%{_menudir}/%{name} << EOF
-?package(%{name}): \
- command="%{_bindir}/%{name}" \
- icon="%{name}.png" \
- needs="X11" \
- section="Office/Communications/Phone" \
- title="Kiax" \
- longtitle="Kiax is an IAX client application (a so called Softphone)" \
- xdg="true"
-EOF
 
 # XDG menu
 install -d %{buildroot}%{_datadir}/applications
@@ -103,7 +92,6 @@ EOF
 %defattr(-,root,root,-)
 %doc CHANGELOG COPYING README
 %{_bindir}/%{name}
-%{_menudir}/%{name}
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
