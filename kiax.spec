@@ -1,7 +1,7 @@
 Summary:	IAX client application (a so called Softphone)
 Name:		kiax
 Version:	0.8.51
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	GPL
 Group:		Graphical desktop/KDE
 URL:		http://kiax.org/
