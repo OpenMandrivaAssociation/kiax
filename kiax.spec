@@ -1,4 +1,4 @@
-Summary:	Kiax is an IAX client application (a so called Softphone)
+Summary:	IAX client application (a so called Softphone)
 Name:		kiax
 Version:	0.8.51
 Release:	%mkrel 3
