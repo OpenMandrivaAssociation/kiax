@@ -9,7 +9,7 @@ Source0:	http://prdownloads.sourceforge.net/kiax/%{name}-%{version}-src.tar.bz2
 Source1:	http://kiax.sourceforge.net/img/kiax_logo_small.png
 Patch0:		kiax-0.8.4-system_iaxclient_libs.diff.bz2
 Patch1:		kiax-0.8.51-iaxwrapper.cpp.patch
-BuildRequires:	ImageMagick
+BuildRequires:	imagemagick
 BuildRequires:	iaxclient-devel
 BuildRequires:	kdelibs-devel
 BuildRequires:	xpm-devel
