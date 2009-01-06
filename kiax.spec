@@ -1,18 +1,47 @@
-Summary:	IAX client application (a so called Softphone)
+%define svn	122
+%define rel	1
+
+%if %svn
+%define release		%mkrel 0.%{svn}.1
+%define distname	%{name}-%{svn}.tar.lzma
+%define dirname		%{name}
+%else
+%define release		%mkrel %{rel}
+%define distname	%{name}-%{version}.tar.lzma
+%define dirname		%{name}-%{version}
+%endif
+
+Summary:	IAX client application (softphone)
 Name:		kiax
-Version:	0.8.51
-Release:	%mkrel 6
-License:	GPL
+Version:	2.1
+Release:	%{release}
+License:	GPL+ and LGPL+
 Group:		Graphical desktop/KDE
 URL:		http://kiax.org/
-Source0:	http://prdownloads.sourceforge.net/kiax/%{name}-%{version}-src.tar.bz2
+# They don't seem hot on source tarballs. Look for a tag in SVN if you
+# want to package a stable release. - AdamW 2009/01
+Source0:	http://prdownloads.sourceforge.net/%{name}/%{distname}
 Source1:	http://kiax.sourceforge.net/img/kiax_logo_small.png
-Patch0:		kiax-0.8.4-system_iaxclient_libs.diff.bz2
-Patch1:		kiax-0.8.51-iaxwrapper.cpp.patch
+# Use system libraries. Wow, this buildsystem sucks - AdamW 2009/01
+Patch0:		kiax-2.1-system_libs.patch
+# Fixes for GCC 4.3 - AdamW 2009/01
+Patch1:		kiax-2.0-gcc43.patch
+# Fix for string literal errors - AdamW 2009/01
+Patch2:		kiax-2.0-literal.patch
+# Don't build with dottel, whatever the crap it is, as it's broken
+# - AdamW 2009/01
+Patch3:		kiax-2.1-disable_dottel.patch
 BuildRequires:	imagemagick
 BuildRequires:	iaxclient-devel
-BuildRequires:	kdelibs-devel
 BuildRequires:	xpm-devel
+BuildRequires:	libjson-devel
+BuildRequires:	libspeex-devel
+BuildRequires:	portaudio-devel
+BuildRequires:	gsm-devel
+BuildRequires:	libqt4-devel
+BuildRequires:	sqlite3-devel
+BuildRequires:	alsa-lib-devel
+BuildRequires:	ldns-devel
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -28,53 +57,43 @@ Client.
 
 %prep
 
-%setup -q -n %{name}-%{version}-src
-%patch0 -p1
-%patch1 -p1
+%setup -q -n %{dirname}
+%patch0 -p1 -b .system
+%patch1 -p1 -b .gcc43
+%patch2 -p1 -b .literal
+%patch3 -p1 -b .dottel
 
 %build
-export QTDIR=%{_prefix}/lib/qt3
-export KDEDIR=%{_prefix}
-export LD_LIBRARY_PATH="$QTDIR:/%{_lib}:$LD_LIBRARY_PATH"
-export PATH="$KDEDIR/bin:$PATH"
-
-sh configure --prefix=%{_prefix} --targetos=mandrake
-
+%qmake_qt4
 %make
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-#export DONT_STRIP=1
 
 install -d %{buildroot}%{_bindir}
-install -d %{buildroot}%{_iconsdir}
-install -d %{buildroot}%{_miconsdir}
-install -d %{buildroot}%{_liconsdir}
+install -d %{buildroot}%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
 install -d %{buildroot}%{_datadir}/%{name}/icons
-install -d %{buildroot}%{_datadir}/%{name}/i18n
 
-install -m0755 bin/%{name} %{buildroot}%{_bindir}/
-install -m0644 icons/*.png %{buildroot}%{_datadir}/%{name}/icons/
-install -m0644 i18n/*.qm %{buildroot}%{_datadir}/%{name}/i18n/
+install -m0755 gui/gui %{buildroot}%{_bindir}/%{name}
+install -m0644 gui/icons/*.png %{buildroot}%{_datadir}/%{name}/icons/
+install -m0644 gui/*.ui %{buildroot}%{_datadir}/%{name}
 
 # fix some icons
-convert %{SOURCE1} -geometry 48x48 %{buildroot}%{_liconsdir}/%{name}.png
-convert %{SOURCE1} -geometry 32x32 %{buildroot}%{_iconsdir}/%{name}.png
-convert %{SOURCE1} -geometry 16x16 %{buildroot}%{_miconsdir}/%{name}.png
-
-# fix mandrake menu entry
+convert %{SOURCE1} -geometry 48x48 %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+convert %{SOURCE1} -geometry 32x32 %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+convert %{SOURCE1} -geometry 16x16 %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
 
 # XDG menu
 install -d %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
 Name=Kiax
-Comment=Kiax is an IAX client application (a so called Softphone)
+Comment=IAX softphone
 Exec=%{_bindir}/%{name}
 Icon=%{name}
 Terminal=false
 Type=Application
-Categories=X-MandrivaLinux-Internet-VideoConference;Network;Telephony;
+Categories=Network;Telephony;
 EOF
 
 %if %mdkversion < 200900
@@ -94,11 +113,8 @@ EOF
 
 %files
 %defattr(-,root,root,-)
-%doc CHANGELOG COPYING README
 %{_bindir}/%{name}
-%{_iconsdir}/%{name}.png
-%{_miconsdir}/%{name}.png
-%{_liconsdir}/%{name}.png
 %{_datadir}/%{name}
 %{_datadir}/applications/*.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
 
