@@ -56,10 +56,9 @@ management and easy configuration. That is - a simple to use IAX
 Client.
 
 %prep
-
 %setup -q -n %{dirname}
 %patch0 -p1 -b .system
-%patch1 -p1 -b .gcc43
+%patch1 -p0 -b .gcc43
 %patch2 -p1 -b .literal
 %patch3 -p1 -b .dottel
 
