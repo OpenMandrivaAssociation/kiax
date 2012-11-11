@@ -1,0 +1,55 @@
+--- kiax/gui/gui.pro	2009-01-05 19:24:25.000000000 -0800
++++ kiax/gui/gui.pro.new	2009-01-05 19:29:11.000000000 -0800
+@@ -32,22 +32,22 @@
+ ICON = macosicons.icns
+ }
+ 
+-KIAXOPT += dottel
+-
+-contains( KIAXOPT, dottel ): {
+-	message("Enabling dottel support..")
+-	DEFINES += USE_DOTTEL
+-	HEADERS += 	Kiax2DotTelDialog.h
+-	SOURCES += 	Kiax2DotTelDialog.cpp
+-	HEADERS += 	DotTelUtils.h 
+-	SOURCES += 	DotTelUtils.cpp
+-
+-	FORMS += dotteldialog.ui
+-	linux-g++ {
+-		INCLUDEPATH += $$CORELIBDIR/includes/ldns
+-		LIBS += $$LIBSDIR/libldns.a -lssl
+-	}
+-}
++#KIAXOPT += dottel
++#
++#contains( KIAXOPT, dottel ): {
++#	message("Enabling dottel support..")
++#	DEFINES += USE_DOTTEL
++#	HEADERS += 	Kiax2DotTelDialog.h
++#	SOURCES += 	Kiax2DotTelDialog.cpp
++#	HEADERS += 	DotTelUtils.h 
++#	SOURCES += 	DotTelUtils.cpp
++#
++#	FORMS += dotteldialog.ui
++#	linux-g++ {
++#		INCLUDEPATH += $$CORELIBDIR/includes/ldns
++#		LIBS += $$LIBSDIR/libldns.a -lssl
++#	}
++#}
+ 
+ # comment if you don't have hold() in your iaxclient
+ # DEFINES += IAXCLIENT_HOLD_HACK
+--- kiax/gui/Kiax2MainWindow.h	2008-12-28 01:03:02.000000000 -0800
++++ kiax/gui/Kiax2MainWindow.h.new	2009-01-05 19:33:06.000000000 -0800
+@@ -46,9 +46,9 @@
+ #include "Kiax2CallAppearance.h"
+ #include "Kiax2CallButton.h"
+ #include <QButtonGroup>
+-#include "Kiax2DotTelDialog.h"
+ 
+-#ifdef USE_DOTTEL	
++#ifdef USE_DOTTEL
++#include "Kiax2DotTelDialog.h"
+ #include "DotTelUtils.h"
+ #endif
+ 
