@@ -35,16 +35,15 @@ BuildRequires:	imagemagick
 BuildRequires:	iaxclient-devel
 BuildRequires:	xpm-devel
 BuildRequires:	libjson-devel
-BuildRequires:	libspeex-devel
+BuildRequires:	pkgconfig(speex)
 BuildRequires:	portaudio-devel
 BuildRequires:	gsm-devel
 BuildRequires:	libqt4-devel
 BuildRequires:	sqlite3-devel
-BuildRequires:	alsa-lib-devel
+BuildRequires:	pkgconfig(alsa)
 BuildRequires:	ldns-devel
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Kiax is an IAX client application (a so called Softphone) which
@@ -117,3 +116,71 @@ EOF
 %{_datadir}/applications/*.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 
+
+
+%changelog
+* Fri Feb 19 2010 Funda Wang <fwang@mandriva.org> 2.1-0.122.1mdv2010.1
++ Revision: 508460
+- more gcc 43 fix
+
+  + Thierry Vignaud <tvignaud@mandriva.com>
+    - rebuild
+
+* Tue Jan 06 2009 Adam Williamson <awilliamson@mandriva.org> 2.1-0.122.1mdv2009.1
++ Revision: 325192
+- update file list
+- update menu entry
+- fd.o icons
+- builds with qmake now
+- update and fix buildrequires
+- add dottel.patch: don't build with dottel support, it breaks
+- add literal.patch: fix string literal errors
+- add system_libs.patch: build against system libs
+- drop old patches now irrelevant
+- new license policy, correct license
+- add conditionals for SVN build
+- bump to current SVN (basically 2.1 beta 1, they don't do tarballs)
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - lowercase ImageMagick
+
+  + Thierry Vignaud <tvignaud@mandriva.com>
+    - rebuild
+    - rebuild
+    - fix "foobar is blabla" summary (=> "blabla") so that it looks nice in rpmdrake
+    - drop old menu
+    - kill re-definition of %%buildroot on Pixel's request
+    - import kiax
+
+  + Pixel <pixel@mandriva.com>
+    - rpm filetriggers deprecates update_menus/update_scrollkeeper/update_mime_database/update_icon_cache/update_desktop_database/post_install_gconf_schemas
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+
+* Sun Sep 17 2006 Oden Eriksson <oeriksson@mandriva.com> 0.8.51-3mdv2007.0
+- rebuild
+
+* Fri Sep 15 2006 Oden Eriksson <oeriksson@mandriva.com> 0.8.51-2mdv2007.0
+- fix xdg menu
+
+* Sun Jun 11 2006 Stefan van der Eijk <stefan@eijk.nu> 0.8.51-1mdk
+- 0.8.51
+- rediff patch0
+- drop patch1 (merged upstream)
+
+* Mon Dec 26 2005 Nicolas Lécureuil <neoclust@mandriva.org> 0.8.4-3mdk
+- Remove redundant buildRequires
+
+* Mon Apr 18 2005 Oden Eriksson <oeriksson@mandriva.com> 0.8.4-2mdk
+- make it work on x86_64 (P1 by emosto at users.sourceforge.net)
+
+* Fri Apr 15 2005 Oden Eriksson <oeriksson@mandrakesoft.com> 0.8.4-1mdk
+- 0.8.4
+- fix P0
+- use correct menu group
+- note 0.8.4 segfaults on 10.1 x86_64
+
+* Mon Apr 11 2005 Oden Eriksson <oeriksson@mandrakesoft.com> 0.8.3-1mdk
+- initial package
