@@ -4,7 +4,7 @@ Summary:	IAX client application (softphone)
 Name:		kiax
 Version:	2.1
 Release:	0.%{svn}.3
-License:	GPL+ and LGPL+
+License:	GPLv3+ and LGPLv3+
 Group:		Graphical desktop/KDE
 Url:		http://kiax.org/
 # They don't seem hot on source tarballs. Look for a tag in SVN if you
@@ -16,7 +16,7 @@ Patch0:		kiax-2.1-system_libs.patch
 # Fixes for GCC 4.3 - AdamW 2009/01
 Patch1:		kiax-2.0-gcc43.patch
 # Fix for string literal errors - AdamW 2009/01
-Patch2:		kiax-2.0-literal.patch
+Patch2:		kiax-2.1-qdebug.patch
 # Don't build with dottel, whatever the crap it is, as it's broken
 # - AdamW 2009/01
 Patch3:		kiax-2.1-disable_dottel.patch

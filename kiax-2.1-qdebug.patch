@@ -1,11 +1,12 @@
---- kiax-2.0/gui/Kiax2Application.cpp	2008-12-27 22:53:59.000000000 -0800
-+++ kiax-2.0/gui/Kiax2Application.cpp.new	2008-12-27 23:09:17.000000000 -0800
+diff -urN kiax/gui/Kiax2Application.cpp kiax-patched/gui/Kiax2Application.cpp
+--- kiax/gui/Kiax2Application.cpp	2008-12-28 19:03:02.000000000 +1000
++++ kiax-patched/gui/Kiax2Application.cpp	2014-03-07 15:18:14.000000000 +1100
 @@ -81,7 +81,7 @@
  	QLocalSocket *localSocket = localServer->nextPendingConnection();
  	if (!localSocket->waitForReadyRead(timeout))
  	{
 -		qDebug(localSocket->errorString().toLatin1());
-+		qDebug("%s", localSocket->errorString().toLatin1());
++		qDebug() << localSocket->errorString().toLatin1();
  		return;
  	}
  	QByteArray byteArray = localSocket->readAll();
@@ -14,14 +15,14 @@
  	if (!localSocket.waitForConnected(timeout))
  	{
 -		qDebug(localSocket.errorString().toLatin1());
-+		qDebug("%s", localSocket.errorString().toLatin1());
++		qDebug() << localSocket.errorString().toLatin1();
  		return false;
  	}
  	localSocket.write(message.toUtf8());
  	if (!localSocket.waitForBytesWritten(timeout))
  	{
 -		qDebug(localSocket.errorString().toLatin1());
-+		qDebug("%s", localSocket.errorString().toLatin1());
++		qDebug() << localSocket.errorString().toLatin1();
  		return false;
  	}
  	localSocket.disconnectFromServer();
