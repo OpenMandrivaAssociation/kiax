@@ -6,7 +6,7 @@ Version:	2.1
 Release:	0.%{svn}.3
 License:	GPLv3+ and LGPLv3+
 Group:		Graphical desktop/KDE
-Url:		http://kiax.org/
+Url:		https://kiax.org/
 # They don't seem hot on source tarballs. Look for a tag in SVN if you
 # want to package a stable release. - AdamW 2009/01
 Source0:	http://prdownloads.sourceforge.net/%{name}/%{name}-%{svn}.tar.lzma
