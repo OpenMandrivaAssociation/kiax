@@ -20,6 +20,7 @@ Patch2:		kiax-2.1-qdebug.patch
 # Don't build with dottel, whatever the crap it is, as it's broken
 # - AdamW 2009/01
 Patch3:		kiax-2.1-disable_dottel.patch
+BuildRequires:	make
 BuildRequires:	imagemagick
 BuildRequires:	gsm-devel
 BuildRequires:	ldns-devel
